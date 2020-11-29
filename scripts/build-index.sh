@@ -11,21 +11,21 @@ COLL="$1" && shift
 # Define the index basename
 BASE="$WORK/$COLL/$COLL.url"
 
-# Build term lexicon
-$BIN/lexicon build "$BASE.terms" "$BASE.termlex"
+# # Build term lexicon
+# $BIN/lexicon build "$BASE.terms" "$BASE.termlex"
 
-# Build document lexicon
-$BIN/lexicon build "$BASE.documents" "$BASE.doclex"
+# # Build document lexicon
+# $BIN/lexicon build "$BASE.documents" "$BASE.doclex"
 
-# Create block-max index metadata.
-$BIN/create_wand_data -c "$BASE" -o "$BASE.bm25.bmw" -s bm25 -b 128
+# # Create block-max index metadata.
+# $BIN/create_wand_data -c "$BASE" -o "$BASE.bm25.bmw" -s bm25 -b 128
 
-# Create variable block-max index metadata.
-$BIN/create_wand_data -c "$BASE" -o "$BASE.bm25.vbmw" -s bm25 -l 22.5
+# # Create variable block-max index metadata.
+# $BIN/create_wand_data -c "$BASE" -o "$BASE.bm25.vbmw" -s bm25 -l 22.5
 
-# Compress inverted index with SIMDBP-128 encoding.
-$BIN/compress_inverted_index -c "$BASE" -o "$BASE.simdbp" -e block_simdbp \
-    --check
+# # Compress inverted index with SIMDBP-128 encoding.
+# $BIN/compress_inverted_index -c "$BASE" -o "$BASE.simdbp" -e block_simdbp \
+#     --check
 
 # Create quantized block-max index metadata.
 $BIN/create_wand_data -c "$BASE" -o "$BASE.bm25.quantized.bmw" -s bm25 -b 128 \

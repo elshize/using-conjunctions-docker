@@ -1,7 +1,9 @@
 # Install
 ../pisa.sh
-../intersect.sh
 
 ciff.sh
-build.sh
+build.sh # TODO: threshold estimation
 queries.sh
+# TODO: greedy v. exhaustive evaluation
+build-precomputed.sh
+queries-precomputed.sh

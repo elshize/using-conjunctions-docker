@@ -14,4 +14,4 @@ curl https://cmake.org/files/v3.14/cmake-3.14.1-Linux-x86_64.sh -o /tmp/curl-ins
       && rm /tmp/curl-install.sh
 
 apt-get update
-apt-get install -y jq
+apt-get install -y jq neovim bc
