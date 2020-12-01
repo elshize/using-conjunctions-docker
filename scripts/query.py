@@ -66,7 +66,12 @@ def cli_args():
         action="store_true",
         default=False,
     )
-    #
+    parser.add_argument(
+        "--no-ssd",
+        dest="no_ssd",
+        action="store_true",
+        default=False,
+    )
     return parser.parse_args()
 
 
@@ -98,7 +103,6 @@ class QueryExecutor:
         self.run = args.run
         self.pisa_bin = args.pisa_bin
         self.queries_dir = args.queries_dir
-        # self.selections_dir = args.selections_dir
         self.queries_program = os.path.join(self.pisa_bin, "queries")
         self.evaluate_program = os.path.join(self.pisa_bin, "evaluate_queries")
         self.dry_run = args.dry
@@ -106,11 +110,11 @@ class QueryExecutor:
         self.k = k
         self.fwd = args.fwd
         self.output_dir = args.output_dir
-        # self.selections = args.selections
         self.pairs = args.pairs
         self.only_intersection_queries = args.only_intersection_queries
         self.no_intersection_queries = args.no_intersection_queries
         self.brute_force = args.brute_force
+        self.no_ssd = args.no_ssd
 
     def execute(self, command):
         print(command)
@@ -144,7 +148,7 @@ class QueryExecutor:
                 f"{quantized_suffix}.{pairs}.simdbp.query-pairs"
                 " --scale 1.25"  # TODO
             )
-            if mode == Mode.Benchmark:
+            if mode == Mode.Benchmark and not self.no_ssd:
                 pair_index += " --disk-resident-pairs"
             selection_suffix = f".{pairs}" if pairs != "all" else ""
         output_file = os.path.join(
@@ -229,11 +233,11 @@ def main(args):
     for k in args.k:
         executor = QueryExecutor(args, k)
 
-        execute_all(executor, quantized=False, mode=Mode.Benchmark)
-        # execute_all(executor, quantized=False, mode=Mode.Inspect)
+        # execute_all(executor, quantized=False, mode=Mode.Benchmark)
+        execute_all(executor, quantized=False, mode=Mode.Inspect)
         # execute_all(executor, quantized=False, mode=Mode.Evaluate)
 
-        execute_all(executor, quantized=True, mode=Mode.Benchmark)
+        # execute_all(executor, quantized=True, mode=Mode.Benchmark)
         # execute_all(executor, quantized=True, mode=Mode.Inspect)
         # execute_all(executor, quantized=True, mode=Mode.Evaluate)
 

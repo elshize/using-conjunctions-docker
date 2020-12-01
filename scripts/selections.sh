@@ -55,13 +55,6 @@ function eval_selections {
     for k in "${ks[@]}"; do
         brute="$DATA/selections/brute-force.$coll.$track-short$size.$k.jl"
         greedy="$DATA/selections/greedy.$coll.$track-short$size.$k.jl"
-        #select_intersections "$coll" "$track" "$size" "--brute-force" "$k" \
-        #    | jq '.cost' > "$brute"
-        #select_intersections "$coll" "$track" "$size" "" "$k" \
-        #    | jq '.cost' > "$greedy"
-        #diff_count=$(diff -y --suppress-common-lines $greedy $brute | wc -l)
-        #all_count=$(cat /tmp/brute | wc -l)
-        #prec=$(echo "1.0 - ($diff_count / $all_count)" | bc -l)
         select_intersections "$coll" "$track" "$size" "--brute-force" "$k" > "$brute"
         select_intersections "$coll" "$track" "$size" "" "$k" > "$greedy"
         select_intersections_for_all_queries "$coll" "$track" "$size" "" "$k" \
@@ -81,8 +74,6 @@ eval_selections "cw09b" "05" ".225b"
 eval_selections "cw09b" "06" ".225b"
 eval_selections "cw09b" "05" ".300b"
 eval_selections "cw09b" "06" ".300b"
-# eval_selections "cw09b" "05" ".750b"
-# eval_selections "cw09b" "06" ".750b"
 
 eval_selections "cw12b" "05" ".all"
 eval_selections "cw12b" "06" ".all"
@@ -96,5 +87,3 @@ eval_selections "cw12b" "05" ".225b"
 eval_selections "cw12b" "06" ".225b"
 eval_selections "cw12b" "05" ".300b"
 eval_selections "cw12b" "06" ".300b"
-# eval_selections "cw12b" "05" ".750b"
-# eval_selections "cw12b" "06" ".750b"

@@ -11,7 +11,7 @@ function queries_no_intersections {
     run=$2
     base="$WORK/$coll/$coll.url"
     python3 /scripts/query.py \
-        -k 10 100 10000 \
+        -k 1000 \
         -r "$run" \
         --queries-dir "$DATA/queries" \
         --pisa-bin "$BIN" \
@@ -21,40 +21,62 @@ function queries_no_intersections {
         --no-intersection-queries
 }
 
-# queries_no_intersections "cw09b" "cw09b.05.queries.hybrid"
-# queries_no_intersections "cw09b" "cw09b.06.queries.hybrid"
-# queries_no_intersections "cw12b" "cw12b.05.queries.hybrid"
-# queries_no_intersections "cw12b" "cw12b.06.queries.hybrid"
+queries_no_intersections "cw09b" "cw09b.05.queries.hybrid"
+queries_no_intersections "cw09b" "cw09b.06.queries.hybrid"
+queries_no_intersections "cw12b" "cw12b.05.queries.hybrid"
+queries_no_intersections "cw12b" "cw12b.06.queries.hybrid"
 
-# queries_no_intersections "cw09b" "cw09b.05.queries.exact"
-# queries_no_intersections "cw09b" "cw09b.06.queries.exact"
-# queries_no_intersections "cw12b" "cw12b.05.queries.exact"
-# queries_no_intersections "cw12b" "cw12b.06.queries.exact"
+queries_no_intersections "cw09b" "cw09b.05.queries.exact"
+queries_no_intersections "cw09b" "cw09b.06.queries.exact"
+queries_no_intersections "cw12b" "cw12b.05.queries.exact"
+queries_no_intersections "cw12b" "cw12b.06.queries.exact"
 
 function queries {
     coll=$1
     run=$2
+    flags=$3
     base="$WORK/$coll/$coll.url"
     python3 /scripts/query.py \
-        -k 10 100 10000 \
+        -k 1000 \
         -r "$run" \
         --queries-dir "$DATA/queries" \
         --pisa-bin "$BIN" \
         --index-basename "$base" \
         --fwd "$base" \
         --output-dir "$DATA" \
-        --only-intersection-queries
+        $flags --only-intersection-queries
 }
 
-# queries "cw09b" "cw09b.05.queries.hybrid"
-# queries "cw09b" "cw09b.06.queries.hybrid"
-# queries "cw12b" "cw12b.05.queries.hybrid"
-# queries "cw12b" "cw12b.06.queries.hybrid"
+queries "cw09b" "cw09b.05.queries.hybrid" ""
+queries "cw09b" "cw09b.06.queries.hybrid" ""
+queries "cw12b" "cw12b.05.queries.hybrid" ""
+queries "cw12b" "cw12b.06.queries.hybrid" ""
 
-# queries "cw09b" "cw09b.05.queries.exact"
-# queries "cw09b" "cw09b.06.queries.exact"
-# queries "cw12b" "cw12b.05.queries.exact"
-# queries "cw12b" "cw12b.06.queries.exact"
+cp "$DATA/queries/cw09b.05.queries.hybrid.jl" \
+    "$DATA/queries/cw09b.05.queries.hybrid-no-ssd.jl"
+cp "$DATA/queries/cw09b.06.queries.hybrid.jl" \
+    "$DATA/queries/cw09b.06.queries.hybrid-no-ssd.jl"
+cp "$DATA/queries/cw12b.05.queries.hybrid.jl" \
+    "$DATA/queries/cw12b.05.queries.hybrid-no-ssd.jl"
+cp "$DATA/queries/cw12b.06.queries.hybrid.jl" \
+    "$DATA/queries/cw12b.06.queries.hybrid-no-ssd.jl"
+cp "$DATA/queries/cw09b.05.queries.hybrid.quantized.jl" \
+    "$DATA/queries/cw09b.05.queries.hybrid-no-ssd.quantized.jl"
+cp "$DATA/queries/cw09b.06.queries.hybrid.quantized.jl" \
+    "$DATA/queries/cw09b.06.queries.hybrid-no-ssd.quantized.jl"
+cp "$DATA/queries/cw12b.05.queries.hybrid.quantized.jl" \
+    "$DATA/queries/cw12b.05.queries.hybrid-no-ssd.quantized.jl"
+cp "$DATA/queries/cw12b.06.queries.hybrid.quantized.jl" \
+    "$DATA/queries/cw12b.06.queries.hybrid-no-ssd.quantized.jl"
+queries "cw09b" "cw09b.05.queries.hybrid-no-ssd" "--no-ssd"
+queries "cw09b" "cw09b.06.queries.hybrid-no-ssd" "--no-ssd"
+queries "cw12b" "cw12b.05.queries.hybrid-no-ssd" "--no-ssd"
+queries "cw12b" "cw12b.06.queries.hybrid-no-ssd" "--no-ssd"
+
+queries "cw09b" "cw09b.05.queries.exact" ""
+queries "cw09b" "cw09b.06.queries.exact" ""
+queries "cw12b" "cw12b.05.queries.exact" ""
+queries "cw12b" "cw12b.06.queries.exact" ""
 
 function queries_short {
     coll=$1
@@ -90,3 +112,7 @@ queries_short "cw09b" "cw09b.05.queries.hybrid"
 queries_short "cw09b" "cw09b.06.queries.hybrid"
 queries_short "cw09b" "cw09b.05.queries.exact"
 queries_short "cw09b" "cw09b.06.queries.exact"
+queries_short "cw12b" "cw12b.05.queries.hybrid"
+queries_short "cw12b" "cw12b.06.queries.hybrid"
+queries_short "cw12b" "cw12b.05.queries.exact"
+queries_short "cw12b" "cw12b.06.queries.exact"
